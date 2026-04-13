@@ -53,7 +53,7 @@
   --slate:  #9fb0c5;
   --slate2: #7f95b3;
 }
-<button id="themeToggle" class="theme-btn">🌙</button>
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;overflow-x:hidden;cursor:none}
@@ -73,6 +73,7 @@ nav.sc{background:rgba(247,249,252,.96);backdrop-filter:blur(16px);box-shadow:0 
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--coral);border-radius:2px;transform:scaleX(0);transform-origin:right;transition:transform .25s}
 .nav-links a:hover{color:var(--navy)}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+ 
 
 /* HERO */
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 440px;align-items:center;padding:7rem 4rem 4rem;gap:4rem;position:relative;overflow:hidden;background:var(--navy)}
@@ -342,6 +343,7 @@ body.edit-mode .del-btn{display:flex!important}
 nav:not(.sc) .nav-links a{color:rgba(255,255,255,.6)}
 nav:not(.sc) .nav-links a:hover{color:#fff}
 nav:not(.sc) .nav-logo{color:#fff}
+  
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -381,6 +383,7 @@ nav:not(.sc) .nav-logo{color:#fff}
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button id="themeToggle" class="theme-btn">🌙</button>
 </nav>
 
 <!-- HERO -->
