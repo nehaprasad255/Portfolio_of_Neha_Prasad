@@ -945,7 +945,9 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
   }, 2200);
 })();
 
-
+// ─── KEYBOARD ─────────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  
 // ─── EDIT MODE ────────────────────────────────────────────
 /*   let editMode=false;
  function toggleEdit(){
@@ -1087,8 +1089,7 @@ function uploadImg(e,idx){
   setTimeout(()=>btn.textContent=orig,2200);
 }
   
-// ─── KEYBOARD ─────────────────────────────────────────────
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
 </script>
 </body>
 </html>
