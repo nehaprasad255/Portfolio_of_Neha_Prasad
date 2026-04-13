@@ -904,9 +904,51 @@ function showExp(i,el){
   if(ep) ep.classList.add('active');
 }
 
+
+  // ─── CURSOR ───────────────────────────────────────────────
+const cur=document.getElementById('cur');
+const curR=document.getElementById('curR');
+let rx=0,ry=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{
+  cx=e.clientX; cy=e.clientY;
+  cur.style.left=cx+'px'; cur.style.top=cy+'px';
+});
+setInterval(()=>{
+  rx+=(cx-rx)*.12; ry+=(cy-ry)*.12;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+},16);
+document.querySelectorAll('a,button,.proj-card,.exp-tab,.a-card,.c-link,.et-btn,.add-proj-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('h'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
+});
+
+// ─── SCROLL ───────────────────────────────────────────────
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+
+// ─── TYPEWRITER ───────────────────────────────────────────
+(function(){
+  const words = document.querySelectorAll('.tw-word');
+  if(!words.length) return;
+  let cur = 0;
+  words[0].classList.add('active');
+  setInterval(()=>{
+    const next = (cur+1) % words.length;
+    words[cur].classList.remove('active');
+    words[cur].classList.add('exit');
+    setTimeout(()=>words[cur].classList.remove('exit'), 500);
+    words[next].classList.add('active');
+    cur = next;
+  }, 2200);
+})();
+
+
 // ─── EDIT MODE ────────────────────────────────────────────
-let editMode=false;
-function toggleEdit(){
+/*   let editMode=false;
+ function toggleEdit(){
   editMode=!editMode;
   document.body.classList.toggle('edit-mode',editMode);
   document.querySelectorAll('[contenteditable]').forEach(el=>el.contentEditable=editMode?'true':'false');
@@ -1022,7 +1064,7 @@ function uploadImg(e,idx){
 }
 
 // ─── SAVE & DOWNLOAD ──────────────────────────────────────
-function saveDownload(){
+// function saveDownload(){
   const wasEditing=editMode;
   if(wasEditing){
     document.body.classList.remove('edit-mode');
@@ -1044,47 +1086,7 @@ function saveDownload(){
   btn.textContent='✓ Downloaded!';
   setTimeout(()=>btn.textContent=orig,2200);
 }
-
-// ─── CURSOR ───────────────────────────────────────────────
-const cur=document.getElementById('cur');
-const curR=document.getElementById('curR');
-let rx=0,ry=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{
-  cx=e.clientX; cy=e.clientY;
-  cur.style.left=cx+'px'; cur.style.top=cy+'px';
-});
-setInterval(()=>{
-  rx+=(cx-rx)*.12; ry+=(cy-ry)*.12;
-  curR.style.left=rx+'px'; curR.style.top=ry+'px';
-},16);
-document.querySelectorAll('a,button,.proj-card,.exp-tab,.a-card,.c-link,.et-btn,.add-proj-btn').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('h'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
-});
-
-// ─── SCROLL ───────────────────────────────────────────────
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50));
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-
-
-// ─── TYPEWRITER ───────────────────────────────────────────
-(function(){
-  const words = document.querySelectorAll('.tw-word');
-  if(!words.length) return;
-  let cur = 0;
-  words[0].classList.add('active');
-  setInterval(()=>{
-    const next = (cur+1) % words.length;
-    words[cur].classList.remove('active');
-    words[cur].classList.add('exit');
-    setTimeout(()=>words[cur].classList.remove('exit'), 500);
-    words[next].classList.add('active');
-    cur = next;
-  }, 2200);
-})();
-
+  
 // ─── KEYBOARD ─────────────────────────────────────────────
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 </script>
