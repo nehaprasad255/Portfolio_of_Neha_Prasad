@@ -813,7 +813,7 @@ nav:not(.sc) .nav-logo{color:#fff}
 </div>
 
 <!-- EDIT TOOLBAR -->
-<div class="edit-toolbar" id="editToolbar">
+<!-- <div class="edit-toolbar" id="editToolbar">
   <div class="et-dot" id="etDot"></div>
   <span class="et-label" id="etLabel">View mode</span>
   <div class="et-sep"></div>
@@ -822,7 +822,7 @@ nav:not(.sc) .nav-logo{color:#fff}
   <div class="et-sep"></div>
   <button class="et-btn dl" onclick="saveDownload()">Download</button>
 </div>
-<div class="edit-hint" id="editHint">✏ Edit mode — click any text to edit · orange dashes = editable</div>
+<div class="edit-hint" id="editHint">✏ Edit mode — click any text to edit · orange dashes = editable</div> -->
 
 <script>
 // ─── PROJECT DATA ─────────────────────────────────────────
@@ -949,7 +949,7 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
   
 // ─── EDIT MODE ────────────────────────────────────────────
-/*   let editMode=false;
+ let editMode=false;
  function toggleEdit(){
   editMode=!editMode;
   document.body.classList.toggle('edit-mode',editMode);
