@@ -107,6 +107,10 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;transition:background .3s,box-shadow .3s}
 nav.sc{background:rgba(247,249,252,.96);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border)}
+  body.dark nav.sc {
+  background: rgba(11, 18, 32, 0.96);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy);text-decoration:none;letter-spacing:-.01em}
 .nav-logo span{color:var(--coral)}
 .nav-links{display:flex;gap:2.2rem;list-style:none}
