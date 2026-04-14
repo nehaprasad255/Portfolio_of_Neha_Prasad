@@ -377,30 +377,106 @@ section:not(.hero) { padding: 7rem 4rem; }
 ═══════════════════════════════════════ */
 #projects { background: var(--bg); transition: background 0.35s ease; }
 .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+
+/* Project card — no image version */
 .proj-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r2); overflow: hidden; cursor: none;
-  transition: border-color .25s, transform .25s, box-shadow .25s, background 0.35s ease, border-color 0.35s ease;
-  position: relative;
+  transition: border-color .25s, transform .25s, box-shadow .25s, background 0.35s ease;
+  position: relative; display: flex; flex-direction: column;
 }
 .proj-card:hover { border-color: var(--coral); transform: translateY(-5px); box-shadow: 0 16px 48px rgba(15,30,53,.1); }
-.proj-img {
-  height: 200px; background: var(--steel); position: relative;
-  overflow: hidden; display: flex; align-items: center; justify-content: center;
-  transition: background 0.35s ease;
+
+/* Coloured top accent bar replacing the image */
+.proj-accent {
+  height: 4px; width: 100%;
+  background: var(--coral);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s ease;
 }
-.proj-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.proj-img-ph { display: flex; flex-direction: column; align-items: center; gap: .6rem; color: var(--slate2); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
-.proj-img-ph svg { opacity: .35; width: 36px; height: 36px; }
-.proj-hover { position: absolute; inset: 0; background: rgba(15,30,53,.88); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; }
-.proj-card:hover .proj-hover { opacity: 1; }
-.proj-hover-btn { background: var(--coral); color: #fff; border: none; padding: .7rem 1.6rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: none; border-radius: var(--r); }
-.proj-body { padding: 1.6rem; }
-.proj-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+.proj-card:hover .proj-accent { transform: scaleX(1); }
+
+/* Project index badge */
+.proj-index {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 2rem; padding: .18rem .55rem;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.proj-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+.proj-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
 .proj-tool { font-family: 'JetBrains Mono', monospace; font-size: .67rem; color: var(--teal); background: var(--teal2); padding: .2rem .65rem; border-radius: 2rem; transition: background 0.3s, color 0.3s; }
 .proj-co { font-size: .7rem; color: var(--muted); transition: color 0.3s; }
-.proj-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem; line-height: 1.3; color: var(--text); transition: color 0.3s; }
-.proj-desc { font-size: .85rem; color: var(--muted); line-height: 1.75; transition: color 0.3s; }
+.proj-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: .6rem; line-height: 1.3; color: var(--text); transition: color 0.3s; }
+.proj-desc { font-size: .85rem; color: var(--muted); line-height: 1.75; transition: color 0.3s; flex: 1; }
+
+/* Info boxes inside each card */
+.proj-info-boxes {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin: 1.1rem 0 1.2rem;
+}
+.proj-ibox {
+  border-radius: var(--r); padding: .65rem .7rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: background 0.3s, border-color 0.3s;
+}
+.proj-ibox-lbl {
+  font-size: .58rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 3px;
+}
+.proj-ibox-val {
+  font-family: 'Playfair Display', serif;
+  font-size: .95rem; font-weight: 700; line-height: 1.2;
+}
+.proj-ibox-sub {
+  font-size: .6rem; color: var(--muted); margin-top: 2px; line-height: 1.3;
+}
+
+/* colour variants */
+.ibox-blue  { } .ibox-blue  .proj-ibox-lbl { color: #185FA5; } .ibox-blue  .proj-ibox-val { color: #0C447C; }
+.ibox-teal  { } .ibox-teal  .proj-ibox-lbl { color: #0F6E56; } .ibox-teal  .proj-ibox-val { color: #085041; }
+.ibox-coral { } .ibox-coral .proj-ibox-lbl { color: #993C1D; } .ibox-coral .proj-ibox-val { color: #712B13; }
+.ibox-amber { } .ibox-amber .proj-ibox-lbl { color: #854F0B; } .ibox-amber .proj-ibox-val { color: #633806; }
+.ibox-purple{ } .ibox-purple.proj-ibox-lbl { color: #534AB7; } .ibox-purple .proj-ibox-val { color: #3C3489; }
+.ibox-green { } .ibox-green .proj-ibox-lbl { color: #3B6D11; } .ibox-green .proj-ibox-val { color: #27500A; }
+
+[data-theme="dark"] .ibox-blue  .proj-ibox-val { color: #85B7EB; }
+[data-theme="dark"] .ibox-blue  .proj-ibox-lbl { color: #B5D4F4; }
+[data-theme="dark"] .ibox-teal  .proj-ibox-val { color: #5DCAA5; }
+[data-theme="dark"] .ibox-teal  .proj-ibox-lbl { color: #9FE1CB; }
+[data-theme="dark"] .ibox-coral .proj-ibox-val { color: #F0997B; }
+[data-theme="dark"] .ibox-coral .proj-ibox-lbl { color: #F5C4B3; }
+[data-theme="dark"] .ibox-amber .proj-ibox-val { color: #EF9F27; }
+[data-theme="dark"] .ibox-amber .proj-ibox-lbl { color: #FAC775; }
+[data-theme="dark"] .ibox-purple .proj-ibox-val { color: #AFA9EC; }
+[data-theme="dark"] .ibox-purple .proj-ibox-lbl { color: #CECBF6; }
+[data-theme="dark"] .ibox-green .proj-ibox-val { color: #97C459; }
+[data-theme="dark"] .ibox-green .proj-ibox-lbl { color: #C0DD97; }
+
+.proj-cta {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .73rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--coral); margin-top: 1rem; cursor: none;
+  transition: gap .2s;
+}
+.proj-card:hover .proj-cta { gap: .65rem; }
+.proj-cta-arrow { font-size: .9rem; }
+
+/* Group label inside grid */
+.proj-group-row {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 1rem;
+  padding: .5rem 0 .2rem;
+}
+.proj-group-row-bar { flex: 1; height: 1px; background: var(--border); }
+.proj-group-row-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
+}
 
 /* ═══════════════════════════════════════
    MODAL
@@ -419,16 +495,22 @@ section:not(.hero) { padding: 7rem 4rem; }
   position: relative;
 }
 .modal-ov.open .modal { transform: translateY(0); }
-.modal-img { height: 260px; background: var(--steel); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: background 0.35s; }
-.modal-img img { width: 100%; height: 100%; object-fit: cover; }
-.modal-img-ph { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(15,30,53,.12); text-transform: uppercase; letter-spacing: .1em; }
-[data-theme="dark"] .modal-img-ph { color: rgba(255,255,255,.06); }
 .modal-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: var(--navy); border: none; border-radius: 50%; color: #fff; font-size: 1rem; cursor: none; display: flex; align-items: center; justify-content: center; transition: background .2s; z-index: 10; }
 .modal-close:hover { background: var(--coral); }
 .modal-body { padding: 2.5rem; }
 .modal-tag { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--teal); background: var(--teal2); padding: .22rem .65rem; border-radius: 2rem; display: inline-block; margin-bottom: .9rem; }
 .modal-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900; color: var(--text); margin-bottom: .3rem; line-height: 1.2; transition: color 0.3s; }
-.modal-company { font-size: .78rem; color: var(--muted); margin-bottom: 2rem; font-weight: 500; transition: color 0.3s; }
+.modal-company { font-size: .78rem; color: var(--muted); margin-bottom: 1rem; font-weight: 500; transition: color 0.3s; }
+
+/* Modal headline quote */
+.modal-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: .95rem; font-style: italic; line-height: 1.7;
+  color: var(--text); border-left: 3px solid var(--coral);
+  padding-left: 1rem; margin-bottom: 2rem;
+  transition: color 0.3s;
+}
+
 .modal-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 2rem; transition: background 0.3s, border-color 0.3s; }
 .modal-stat { background: var(--bg); padding: 1.1rem; transition: background 0.35s ease; }
 .modal-stat-l { font-size: .65rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; transition: color 0.3s; }
@@ -437,6 +519,9 @@ section:not(.hero) { padding: 7rem 4rem; }
 .modal-sec-title { font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--coral); margin-bottom: .7rem; display: flex; align-items: center; gap: .6rem; }
 .modal-sec-title::after { content: ''; flex: 1; height: 1px; background: var(--coral2); }
 .modal-text { font-size: .9rem; color: var(--muted); line-height: 1.82; transition: color 0.3s; }
+.modal-bullets { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+.modal-bullet { display: flex; gap: .75rem; font-size: .88rem; color: var(--muted); line-height: 1.72; }
+.modal-bullet::before { content: '→'; color: var(--coral); font-size: .8rem; flex-shrink: 0; margin-top: .15rem; }
 .modal-tags-list { display: flex; flex-wrap: wrap; gap: .5rem; }
 .modal-tag-item { background: var(--bg); border: 1px solid var(--border); color: var(--slate); font-size: .75rem; font-weight: 500; padding: .25rem .75rem; border-radius: 2rem; transition: background 0.3s, border-color 0.3s, color 0.3s; }
 
@@ -513,6 +598,7 @@ footer {
   body { cursor: auto; }
   .cur, .cur-r { display: none; }
   .skills-layout { grid-template-columns: 1fr; }
+  .proj-info-boxes { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -600,7 +686,7 @@ footer {
     <div class="stat-box">
       <div class="stat-box-top">
         <div class="stat-ico"><svg viewBox="0 0 24 24"><path d="M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2 2H5V5h14v14zm0-16H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></div>
-        <div><div class="stat-num">4+</div><div class="stat-label">Dashboards built</div></div>
+        <div><div class="stat-num">9</div><div class="stat-label">Dashboards built</div></div>
       </div>
     </div>
     <div class="stat-box">
@@ -652,7 +738,7 @@ footer {
     <div class="about-cards">
       <div class="a-card"><div class="a-card-tag">// years</div><div class="a-card-num">2+</div><div class="a-card-label">Years in analytics</div></div>
       <div class="a-card"><div class="a-card-tag">// tools</div><div class="a-card-num">5+</div><div class="a-card-label">Tools mastered</div></div>
-      <div class="a-card"><div class="a-card-tag">// projects</div><div class="a-card-num">4+</div><div class="a-card-label">Dashboards built</div></div>
+      <div class="a-card"><div class="a-card-tag">// projects</div><div class="a-card-num">9</div><div class="a-card-label">Dashboards built</div></div>
       <div class="a-card"><div class="a-card-tag">// industries</div><div class="a-card-num">2</div><div class="a-card-label">Industries covered</div></div>
     </div>
   </div>
@@ -774,75 +860,201 @@ footer {
 <section id="projects">
   <div class="s-kicker rv"><div class="s-kicker-bar"></div><span class="s-kicker-text">Selected Work</span></div>
   <h2 class="s-title rv">Projects & <em>Dashboards</em></h2>
+
   <div class="proj-grid rv" id="projGrid">
+
+    <!-- GROUP LABEL: Broadway Gaming -->
+    <div class="proj-group-row">
+      <span class="proj-group-row-label">Broadway Gaming Ltd. · Tableau · 2025</span>
+      <div class="proj-group-row-bar"></div>
+    </div>
+
+    <!-- Card 1 -->
     <div class="proj-card" onclick="openModal(0)">
-      <div class="proj-img" id="pimg0">
-        <div class="proj-img-ph">
-          <svg viewBox="0 0 48 48" fill="currentColor"><rect x="4" y="26" width="8" height="18"/><rect x="16" y="16" width="8" height="28"/><rect x="28" y="6" width="8" height="38"/><rect x="40" y="20" width="8" height="24"/></svg>
-          <span>Dashboard Preview</span>
+      <div class="proj-accent"></div>
+      <span class="proj-index">01</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Broadway Gaming · 2025</span>
         </div>
+        <div class="proj-title">Executive Overview Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">Total deposits</div><div class="proj-ibox-val">£81.7M</div><div class="proj-ibox-sub">All brands combined</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Brands</div><div class="proj-ibox-val">15+</div><div class="proj-ibox-sub">Sub-brands ranked</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Markets</div><div class="proj-ibox-val">3</div><div class="proj-ibox-sub">UK · Canada · Ireland</div></div>
+        </div>
+        <p class="proj-desc">Turned fragmented monthly reports across 15+ brands and 3 countries into a single executive command centre — surfacing a Canada NGR-per-player advantage that was invisible before.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
       </div>
-      <div class="proj-hover"><button class="proj-hover-btn">View Case Study</button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="proj-card" onclick="openModal(1)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">02</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Broadway Gaming · 2025</span>
+        </div>
+        <div class="proj-title">Sub Brand Performance Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Deposit PP</div><div class="proj-ibox-val">£74.77</div><div class="proj-ibox-sub">Avg. across brands</div></div>
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">NGR PP</div><div class="proj-ibox-val">£29.11</div><div class="proj-ibox-sub">Revenue per player</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Player types</div><div class="proj-ibox-val">5</div><div class="proj-ibox-sub">Tracked per brand</div></div>
+        </div>
+        <p class="proj-desc">Showed that high bonus utilisation didn't guarantee better NGR — giving the brand team a framework to shift spend toward engagement that actually converts to revenue.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="proj-card" onclick="openModal(2)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">03</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Broadway Gaming · 2025</span>
+        </div>
+        <div class="proj-title">Player Behaviour Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">New registrations</div><div class="proj-ibox-val">16,725</div><div class="proj-ibox-sub">Full year 2025</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Retention rate</div><div class="proj-ibox-val">73.5%</div><div class="proj-ibox-sub">Players returning</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Avg days played</div><div class="proj-ibox-val">1,194</div><div class="proj-ibox-sub">Engagement depth</div></div>
+        </div>
+        <p class="proj-desc">Identified the 36–45 age group as the platform's dominant active segment — 2x larger than any other cohort — directly shaping how CRM campaigns and VIP tiers were structured.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="proj-card" onclick="openModal(3)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">04</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Broadway Gaming · 2025</span>
+        </div>
+        <div class="proj-title">Finance Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-amber"><div class="proj-ibox-lbl">NGR (Sep)</div><div class="proj-ibox-val">£2.54M</div><div class="proj-ibox-sub">Net gaming revenue</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Dep. conversion</div><div class="proj-ibox-val">40.21%</div><div class="proj-ibox-sub">Deposits to wagers</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Rev. per player</div><div class="proj-ibox-val">£19–59</div><div class="proj-ibox-sub">Range across brands</div></div>
+        </div>
+        <p class="proj-desc">Showed a £596K bonus liability spike in August preceding a September revenue dip — giving finance a forward-looking signal they previously only saw in hindsight.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="proj-card" onclick="openModal(4)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">05</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Broadway Gaming · 2025</span>
+        </div>
+        <div class="proj-title">Marketing Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">New registrations</div><div class="proj-ibox-val">14,017</div><div class="proj-ibox-sub">June 2025</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Top NGR PP</div><div class="proj-ibox-val">£66.06</div><div class="proj-ibox-sub">Adwords channel</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Retention rate</div><div class="proj-ibox-val">71.9%</div><div class="proj-ibox-sub">After first deposit</div></div>
+        </div>
+        <p class="proj-desc">Proved that the channel driving the fewest registrations was generating the highest-quality players — challenging budget allocation assumptions and making the case for Adwords investment.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="proj-card" onclick="openModal(5)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">06</span>
       <div class="proj-body">
         <div class="proj-meta">
           <span class="proj-tool">Tableau</span>
           <span class="proj-co">Broadway Gaming · 2025</span>
         </div>
         <div class="proj-title">Campaign-Level LTV Cohort Analysis</div>
-        <p class="proj-desc">Identified which acquisition campaigns drove the highest player lifetime value through multi-cohort breakdown and retention curves.</p>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">Dataset size</div><div class="proj-ibox-val">100K+</div><div class="proj-ibox-sub">Player records</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">LTV windows</div><div class="proj-ibox-val">30/60/90</div><div class="proj-ibox-sub">Day cohort tracking</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Impact</div><div class="proj-ibox-val">Q4 budget</div><div class="proj-ibox-sub">Reallocated</div></div>
+        </div>
+        <p class="proj-desc">Two campaigns driving 40%+ of sign-ups were producing below-average LTV players — this analysis directly redirected Q4 acquisition budget toward channels that brought players who actually stayed.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
       </div>
     </div>
-    <div class="proj-card" onclick="openModal(1)">
-      <div class="proj-img" id="pimg1">
-        <div class="proj-img-ph">
-          <svg viewBox="0 0 48 48" fill="currentColor"><rect x="4" y="26" width="8" height="18"/><rect x="16" y="16" width="8" height="28"/><rect x="28" y="6" width="8" height="38"/><rect x="40" y="20" width="8" height="24"/></svg>
-          <span>Dashboard Preview</span>
-        </div>
-      </div>
-      <div class="proj-hover"><button class="proj-hover-btn">View Case Study</button></div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <span class="proj-tool">Tableau</span>
-          <span class="proj-co">Nike India · 2024</span>
-        </div>
-        <div class="proj-title">IT Vendor Workforce Analysis Dashboard</div>
-        <p class="proj-desc">Real-time vendor tracking dashboard covering requisition status, hiring turnaround, and bill rate benchmarking across Nike's key IT partners.</p>
-      </div>
+
+    <!-- GROUP LABEL: Nike India -->
+    <div class="proj-group-row">
+      <span class="proj-group-row-label">Nike India Pvt. Ltd. · Excel & Tableau · 2024–2025</span>
+      <div class="proj-group-row-bar"></div>
     </div>
-    <div class="proj-card" onclick="openModal(2)">
-      <div class="proj-img" id="pimg2">
-        <div class="proj-img-ph">
-          <svg viewBox="0 0 48 48" fill="currentColor"><rect x="4" y="26" width="8" height="18"/><rect x="16" y="16" width="8" height="28"/><rect x="28" y="6" width="8" height="38"/><rect x="40" y="20" width="8" height="24"/></svg>
-          <span>Dashboard Preview</span>
-        </div>
-      </div>
-      <div class="proj-hover"><button class="proj-hover-btn">View Case Study</button></div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <span class="proj-tool">Advanced Excel</span>
-          <span class="proj-co">Nike India · 2025</span>
-        </div>
-        <div class="proj-title">Freight Charges Analysis — Myntra Shipments</div>
-        <p class="proj-desc">Deep-dive cost analysis across Myntra shipment data to surface freight inefficiencies and support logistics budget decisions.</p>
-      </div>
-    </div>
-    <div class="proj-card" onclick="openModal(3)">
-      <div class="proj-img" id="pimg3">
-        <div class="proj-img-ph">
-          <svg viewBox="0 0 48 48" fill="currentColor"><rect x="4" y="26" width="8" height="18"/><rect x="16" y="16" width="8" height="28"/><rect x="28" y="6" width="8" height="38"/><rect x="40" y="20" width="8" height="24"/></svg>
-          <span>Dashboard Preview</span>
-        </div>
-      </div>
-      <div class="proj-hover"><button class="proj-hover-btn">View Case Study</button></div>
+
+    <!-- Card 7 -->
+    <div class="proj-card" onclick="openModal(6)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">07</span>
       <div class="proj-body">
         <div class="proj-meta">
           <span class="proj-tool">Advanced Excel</span>
           <span class="proj-co">Nike India · 2025</span>
         </div>
         <div class="proj-title">FTE Headcount Insight Dashboard</div>
-        <p class="proj-desc">Headcount visibility tool giving HR and ops managers a live view of FTE staffing levels for proactive resource planning.</p>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Total headcount</div><div class="proj-ibox-val">640</div><div class="proj-ibox-sub">FTEs tracked</div></div>
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">Domains</div><div class="proj-ibox-val">10+</div><div class="proj-ibox-sub">GaME, SCPT, CIS…</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Top domain</div><div class="proj-ibox-val">171</div><div class="proj-ibox-sub">GaME FTEs</div></div>
+        </div>
+        <p class="proj-desc">Replaced static, always-outdated headcount reports with a dynamic Excel dashboard — became a standard fixture in Nike India's monthly operations reviews.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
       </div>
     </div>
+
+    <!-- Card 8 -->
+    <div class="proj-card" onclick="openModal(7)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">08</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Tableau</span>
+          <span class="proj-co">Nike India · 2024</span>
+        </div>
+        <div class="proj-title">IT Vendor Workforce Analysis Dashboard</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">Vendors tracked</div><div class="proj-ibox-val">3 major</div><div class="proj-ibox-sub">Wipro · Infosys · Accenture</div></div>
+          <div class="proj-ibox ibox-teal"><div class="proj-ibox-lbl">Dashboard views</div><div class="proj-ibox-val">3</div><div class="proj-ibox-sub">Tracker · Benchmark · Trend</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Impact</div><div class="proj-ibox-val">Fill time</div><div class="proj-ibox-sub">Reduced measurably</div></div>
+        </div>
+        <p class="proj-desc">Gave Nike India's vendor team their first unified view across Wipro, Infosys, and Accenture — replacing weekly spreadsheet chaos with a live single source of truth.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="proj-card" onclick="openModal(8)">
+      <div class="proj-accent"></div>
+      <span class="proj-index">09</span>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tool">Advanced Excel</span>
+          <span class="proj-co">Nike India · 2025</span>
+        </div>
+        <div class="proj-title">Freight Charges Analysis — Myntra Shipments</div>
+        <div class="proj-info-boxes">
+          <div class="proj-ibox ibox-blue"><div class="proj-ibox-lbl">Dimensions</div><div class="proj-ibox-val">4</div><div class="proj-ibox-sub">Type · Route · Weight · Period</div></div>
+          <div class="proj-ibox ibox-amber"><div class="proj-ibox-lbl">Dataset</div><div class="proj-ibox-val">Large</div><div class="proj-ibox-sub">Multi-month shipments</div></div>
+          <div class="proj-ibox ibox-coral"><div class="proj-ibox-lbl">Outcome</div><div class="proj-ibox-val">Renegotiation</div><div class="proj-ibox-sub">Discrepancies flagged</div></div>
+        </div>
+        <p class="proj-desc">Surfaced billing discrepancies and overpriced route categories in Myntra shipment invoices — opening renegotiation conversations with Nike's logistics partner backed by data.</p>
+        <span class="proj-cta">View case study <span class="proj-cta-arrow">→</span></span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -880,81 +1092,133 @@ footer {
 <!-- ═══ MODAL ═══ -->
 <div class="modal-ov" id="modalOv" onclick="closeMOnBg(event)">
   <div class="modal">
-    <div class="modal-img"><div class="modal-img-ph" id="mImgPh"></div><img id="mImgEl" src="" alt="" style="display:none"/></div>
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-body">
       <div class="modal-tag" id="mTag"></div>
       <div class="modal-title" id="mTitle"></div>
       <div class="modal-company" id="mCo"></div>
+      <div class="modal-headline" id="mHeadline"></div>
       <div class="modal-stats" id="mStats"></div>
       <div class="modal-sec"><div class="modal-sec-title">Overview</div><div class="modal-text" id="mOv"></div></div>
-      <div class="modal-sec"><div class="modal-sec-title">Analysis Approach</div><div class="modal-text" id="mAp"></div></div>
-      <div class="modal-sec"><div class="modal-sec-title">Key Findings & Impact</div><div class="modal-text" id="mIm"></div></div>
-      <div class="modal-sec"><div class="modal-sec-title">Tools & Methods</div><div class="modal-tags-list" id="mTags"></div></div>
+      <div class="modal-sec"><div class="modal-sec-title">What I Did</div><div class="modal-text" id="mAp"></div></div>
+      <div class="modal-sec"><div class="modal-sec-title">What It Revealed</div><ul class="modal-bullets" id="mIm"></ul></div>
+      <div class="modal-sec"><div class="modal-sec-title">Skills & Methods</div><div class="modal-tags-list" id="mTags"></div></div>
     </div>
   </div>
 </div>
 
 <script>
-/* ─── PROJECT DATA ─── */
+/* ─── PROJECT DATA — all 9 projects ─── */
 const projects = [
   {
-    tag:"Tableau · 2025", title:"Campaign-Level LTV Cohort Analysis",
+    tag:"Tableau · 2025",
+    title:"Executive Overview Dashboard",
     company:"Broadway Gaming Ltd. · Real-Money Gaming",
-    stats:[{l:"Dataset Size",v:"100K+ player records"},{l:"Analysis Type",v:"Cohort / LTV"},{l:"Tool",v:"Tableau"}],
-    overview:"Broadway Gaming needed to understand which acquisition campaigns were worth the spend — not just which ones drove sign-ups, but which ones brought players who stuck around and generated real revenue.",
-    approach:"I segmented the player base into acquisition cohorts by campaign source and sign-up month, tracked each cohort's lifetime value curve over 30, 60, and 90-day windows, and overlaid campaign spend data to produce a true ROI view.",
-    impact:"The dashboard revealed two campaigns driving 40%+ of volume were generating below-average LTV players. This directly influenced Q4 acquisition budget reallocation toward higher-quality channels.",
-    tags:["Tableau","Cohort Analysis","LTV Modelling","Retention Analysis","Funnel Analysis","A/B Testing","Data Visualisation"]
+    headline:"Turned fragmented monthly reports across 15+ brands and 3 countries into a single executive command centre — surfacing a Canada NGR-per-player advantage that was completely invisible before.",
+    stats:[{l:"Total Deposits",v:"£81.7M"},{l:"Dep. Conversion",v:"32.83%"},{l:"NGR",v:"£29.7M"}],
+    overview:"Broadway Gaming's leadership had no unified view of performance across its 15+ brands and three operating markets. Monthly reports were disconnected and time-consuming to compile. I designed a top-level executive dashboard that gave leadership instant visibility into the metrics that drive acquisition, revenue, and retention decisions — without opening a single spreadsheet.",
+    approach:"Built six KPI headline tiles tracking Deposit, Deposit Conversion (32.83%), NGR (£29.7M), NGR per Player (£79), Bonus % (5.35%), and Hold % (38.94%). Designed dual-axis monthly trend charts for NGR and Deposits across Jan–Sep 2025. Added a New Registrations and FTD tracker with month-on-month comparison. Created an NGR Contribution by Country chart and a Top 15 Sub-brand Performance table with Deposit PP, NGR PP, and Total Active Players.",
+    findings:["Canada generated £243.90 NGR per player — more than 2x the UK rate of £100.26 — despite much lower total volume, flagging it as a high-priority market for targeted acquisition spend.","August was the strongest deposit month (£9.6M) but September saw a sharp £3M drop to £6.5M, prompting an investigation into seasonal player churn patterns.","Vegas Spins and Costabingo led in active player volume but diverged significantly on NGR per player — exposing a quality-vs-quantity trade-off that informed Q4 brand investment priorities."],
+    tags:["Tableau","Executive Reporting","Multi-brand Analysis","KPI Design","Geographic Segmentation","Data Visualisation"]
   },
   {
-    tag:"Tableau · 2024", title:"IT Vendor Workforce Analysis Dashboard",
-    company:"Nike India Pvt. Ltd. · Enterprise / Retail",
-    stats:[{l:"Vendors Tracked",v:"Wipro, Infosys, Accenture+"},{l:"Analysis Type",v:"Workforce / Vendor"},{l:"Tool",v:"Tableau"}],
-    overview:"Nike India's IT vendor management team was tracking contractor performance across multiple large vendors using disconnected spreadsheets, with no single view for turnaround times or bill rates.",
-    approach:"I consolidated requisition data into a unified Tableau dashboard with three views: a live requisition tracker, a vendor benchmark panel, and a contract completion trend line for workforce planning.",
-    impact:"The dashboard became the single source of truth for weekly vendor review meetings and helped reduce average requisition-to-fill time.",
-    tags:["Tableau","Vendor Analysis","Workforce Planning","Staffing Forecasting","KPI Dashboards","SLA Monitoring","Cost Analysis"]
+    tag:"Tableau · 2025",
+    title:"Sub Brand Performance Dashboard",
+    company:"Broadway Gaming Ltd. · Real-Money Gaming",
+    headline:"Showed that high bonus utilisation didn't guarantee better NGR — giving the brand team a framework to shift spend toward engagement that actually converts to revenue.",
+    stats:[{l:"Deposit PP",v:"£74.77"},{l:"NGR PP",v:"£29.11"},{l:"Registered Players",v:"9,949"}],
+    overview:"With 15+ sub-brands operating under the Broadway Gaming umbrella, the business needed more than total revenue figures — it needed to understand which brands were efficient, which player types were driving activity, and whether bonus spend was actually generating sustainable NGR.",
+    approach:"Created a dual-axis NGR vs Deposit per Player scatter across all sub-brands. Built a Bonus Utilisation Rate ranking chart across 10+ brands (ranging from 25% at Lazernight Bingo to 15.8% at Bingo Zing). Designed an Active Player Type matrix — a cross-tab of player lifecycle stage by brand — with Broadway Gaming showing the strongest returning player base at 4,342. Added an Average Days Played chart to measure engagement depth per brand.",
+    findings:["Multiple brands with the highest bonus utilisation rates showed below-average NGR per player — proving bonus spend alone doesn't drive revenue and needed strategic reallocation.","Broadway Gaming and Wink Bingo had the strongest returning player ratios, confirming their role as portfolio retention anchors and justifying continued investment in their loyalty mechanics.","PoshBingo1 led average days played at 6,694 — more than double most competitors — identifying it as the platform's strongest long-term engagement brand despite modest registration numbers."],
+    tags:["Tableau","Brand Benchmarking","Player Segmentation","Bonus Analysis","Cohort Breakdown","Retention Analysis"]
   },
   {
-    tag:"Advanced Excel · 2025", title:"Freight Charges Analysis — Myntra Shipments",
-    company:"Nike India Pvt. Ltd. · Logistics & Supply Chain",
-    stats:[{l:"Dataset Size",v:"Large shipment dataset"},{l:"Analysis Type",v:"Cost / Logistics"},{l:"Tool",v:"Advanced Excel"}],
-    overview:"Nike India needed a clear breakdown of freight charges across Myntra shipments to identify cost inefficiencies and validate invoicing accuracy.",
-    approach:"Using Power Query transformations, I cleaned and standardised the raw shipment data, then built a cost analysis model segmented by shipment type, route, weight band, and time period.",
-    impact:"The analysis surfaced billing discrepancies and identified route categories where freight costs were disproportionately high, supporting renegotiation conversations with the logistics partner.",
-    tags:["Advanced Excel","Power Query","Cost Analysis","Data Cleaning","Pivot Tables","Logistics Analytics","Variance Analysis"]
+    tag:"Tableau · 2025",
+    title:"Player Behaviour Dashboard",
+    company:"Broadway Gaming Ltd. · Real-Money Gaming",
+    headline:"Identified the 36–45 age group as the platform's dominant active segment — 2x larger than any other cohort — directly influencing how CRM campaigns and VIP tiers were structured.",
+    stats:[{l:"New Registrations",v:"16,725"},{l:"Retention Rate",v:"73.5%"},{l:"Returned Players",v:"29,534"}],
+    overview:"Understanding player behaviour — who plays, how often, how much they spend, and why they leave — is the foundation of any effective retention strategy. This dashboard was built to give the product and CRM teams a complete behavioural profile of the platform's active player base, from macro monthly trends down to individual top-performer rankings.",
+    approach:"Built a monthly active player trend line tracking Jan–Sep 2025 from 103,607 to 73,275 with inflection points marked. Designed an age profile bubble chart across six age bands. Created a Players with Most Bonus cumulative chart. Built a Top Performing Players by NGR leaderboard — ranking individual players from £2,047 down to £620 — to support VIP programme targeting.",
+    findings:["The 36–45 age group accounted for 11,034 active players — more than double the next largest cohort — establishing a clear primary demographic for all retention-focused CRM activity.","Active player count fell 27% between August and September, steeper than in any prior month, pointing to an acquisition pipeline gap rather than a retention problem.","The top VIP player (£2,047 NGR) generated nearly 3x the revenue of the 5th-ranked player — a steep cliff indicating a narrow, high-value VIP base that warranted a dedicated account management programme."],
+    tags:["Tableau","Retention Analysis","Age Profiling","CRM Analytics","VIP Identification","Engagement Tracking"]
   },
   {
-    tag:"Advanced Excel · 2025", title:"FTE Headcount Insight Dashboard",
+    tag:"Tableau · 2025",
+    title:"Finance Dashboard",
+    company:"Broadway Gaming Ltd. · Real-Money Gaming",
+    headline:"Showed a £596K bonus liability spike in August that preceded a revenue dip in September — giving finance a forward-looking signal they previously only saw in hindsight.",
+    stats:[{l:"NGR (September)",v:"£2.54M"},{l:"Dep. Conversion",v:"40.21%"},{l:"Cashins",v:"£4.12M"}],
+    overview:"The finance team needed a real-time view of platform liquidity — tracking how deposits, cashins, and bonus liabilities moved together month by month. Without this, bonus liability spikes and cashin conversion drops were only visible after they had already affected the bottom line. I built a finance-focused dashboard that provided both a retrospective view and an early-warning layer.",
+    approach:"Built a dual-axis Liquidity Chart tracking monthly Deposits and Cashins with conversion rate overlays ranging 61–66% across Jan–Sep. Created a Bonus Paid Off trend line showing monthly bonus liability movement including the August spike to £596K. Designed an Active Players Fueling NGR trend. Built a Sub-brand Revenue per Player bar chart ranking 14 brands from King Jackpot (£58.87) to DivaBingo (£19.39).",
+    findings:["The August bonus spike (£596K) preceded a September dip in both active players and NGR — establishing a pattern between promotional over-spend and the following month's revenue performance.","Cashin conversion dipped to 63.2% in September, its lowest point of the year, directly correlated with the drop in active player count — confirming the two metrics needed to be monitored together.","King Jackpot's revenue per player (£58.87) was 3x DivaBingo's (£19.39) — a signal that audience composition and game mechanics, not just player volume, determined brand-level monetisation outcomes."],
+    tags:["Tableau","Finance Analytics","Liquidity Analysis","Bonus Liability Tracking","Revenue per Player","Financial Reporting"]
+  },
+  {
+    tag:"Tableau · 2025",
+    title:"Marketing Dashboard",
+    company:"Broadway Gaming Ltd. · Real-Money Gaming",
+    headline:"Proved that the channel driving the fewest registrations was generating the highest-quality players — a finding that challenged existing budget allocation and made the case for shifting spend toward Adwords.",
+    stats:[{l:"New Registrations",v:"14,017"},{l:"Top NGR PP",v:"£66.06"},{l:"Retention Rate",v:"71.9%"}],
+    overview:"Broadway Gaming's marketing team was allocating spend based on registration volume — not player quality. With five active acquisition channels and multiple affiliate partnerships, there was no clear view of which channels were bringing players who actually deposited, played, and stayed. I built a marketing dashboard that shifted the conversation from volume to value.",
+    approach:"Built a Top Channels by NGR multi-line chart comparing Registrations, FTDs, and NGR per Player across all five channels: Competitors, Social, Affiliate, Affiliate-Natural Intelligence, and Adwords-Non Branded. Created an Executive Mode Analysis pie chart. Designed an Affiliate Efficiency Matrix benchmarking five affiliates across Total Registrations, FTDs, Total NGR, and NGR per Player. Added a Most Engaged Age Groups among FTDs bar chart.",
+    findings:["Adwords-Non Branded delivered an NGR per player of £66.06 — nearly 2x the Social channel rate of £30.06 — despite having the lowest registration volume, making it the most cost-efficient channel by revenue quality.","Dunne Simon84 drove the highest affiliate FTDs (1,912) but returned just £40.94 NGR per player, while DigAdv delivered fewer FTDs but stronger per-player economics — a trade-off invisible without this matrix view.","PlayInBrowser was the dominant access mode at 9,420 users, suggesting that mobile-web optimisation should be the primary product investment for improving conversion rates."],
+    tags:["Tableau","Channel Attribution","Affiliate Benchmarking","Acquisition Quality","NGR per Player","Marketing Analytics"]
+  },
+  {
+    tag:"Tableau · 2025",
+    title:"Campaign-Level LTV Cohort Analysis",
+    company:"Broadway Gaming Ltd. · Real-Money Gaming",
+    headline:"Two campaigns driving 40%+ of sign-ups were producing below-average LTV players — this analysis directly redirected Q4 acquisition budget toward channels that brought players who actually stayed.",
+    stats:[{l:"Dataset Size",v:"100K+ records"},{l:"LTV Windows",v:"30 / 60 / 90 days"},{l:"Impact",v:"Q4 budget reallocation"}],
+    overview:"Broadway Gaming was spending heavily across multiple acquisition channels, but volume metrics told an incomplete story. The real question — which campaigns brought players who generated real, lasting revenue — had never been answered. I built a cohort-based LTV framework that answered it, and the findings directly shaped where Q4 budget went.",
+    approach:"Segmented 100K+ player records into acquisition cohorts by campaign source and registration month. Tracked each cohort's cumulative revenue at 30, 60, and 90-day intervals to build LTV curves per channel. Joined this against campaign spend data to compute true channel-level ROI. Built a dashboard with five interconnected views: cohort LTV curves, channel comparison, funnel drop-off, retention heatmap, and a campaign ROI summary table.",
+    findings:["Two campaigns accounting for 40%+ of total registration volume were consistently producing players with below-average 90-day LTV — the company was paying to acquire churners at scale.","A third channel with modest volume showed 2x the LTV per player of the top-volume channels, making a compelling case for budget reallocation that was acted upon for Q4.","Funnel drop-off analysis showed the largest churn event occurred between FTD and second deposit — signalling that onboarding, not acquisition, was the highest-leverage retention opportunity."],
+    tags:["Tableau","Cohort Analysis","LTV Modelling","Retention Analysis","Funnel Analysis","A/B Testing","Campaign ROI"]
+  },
+  {
+    tag:"Advanced Excel · 2025",
+    title:"FTE Headcount Insight Dashboard",
     company:"Nike India Pvt. Ltd. · HR & Workforce",
-    stats:[{l:"Audience",v:"HR & Ops Managers"},{l:"Analysis Type",v:"Headcount / FTE"},{l:"Tool",v:"Advanced Excel"}],
-    overview:"HR and operations managers needed visibility into FTE headcount across departments and cost centres, but existing reports were static and always out of date.",
-    approach:"I designed a dynamic Excel dashboard using structured data tables, XLOOKUP-based data pulls, and conditional formatting to provide a real-time view of FTE levels by department and manager.",
-    impact:"The dashboard gave managers instant visibility into resourcing gaps and became a standard tool in monthly operations reviews.",
-    tags:["Advanced Excel","XLOOKUP","Conditional Formatting","Dynamic Dashboards","Headcount Planning","FTE Analysis","HR Analytics"]
+    headline:"Replaced static, always-outdated headcount reports with a dynamic Excel dashboard that became a standard fixture in Nike India's monthly operations reviews.",
+    stats:[{l:"Total Headcount",v:"640 FTEs"},{l:"Domains Tracked",v:"10+"},{l:"Top Domain",v:"GaME · 171 FTEs"}],
+    overview:"HR and operations managers at Nike India were working from headcount reports that were always several weeks out of date. With 640+ FTEs spread across 10+ technical domains and multiple HRBP leaders, resourcing decisions were being made on stale data. There was no live way to see department gaps, leader-level staffing, or EGL vs BTP split without manually pulling data from multiple sources.",
+    approach:"Built a Total Count trend line tracking monthly FTE growth from Jan–Jul 2025 (630 → 716) with a dotted forecast line. Designed a horizontal bar chart ranking all departments by FTE count — GaME leading at 171. Created a leader-level staffing chart across 10 HRBPs, with Ganesh Satty leading at 78 FTEs. Added an EGL vs BTP split donut chart (79% EGL / 21% BTP). Used XLOOKUP-based data pulls, structured data tables, and conditional formatting throughout so the dashboard auto-refreshed from source data.",
+    findings:["GaME (171 FTEs) and SCPT (109 FTEs) were the two largest domains yet both showed upward staffing trends — flagging them as areas requiring proactive capacity planning rather than reactive hiring.","TCBO (18 FTEs), RPA FIN (2), and OGC (3) were severely understaffed relative to their operational scope — which hadn't been visible in prior static reports and was immediately flagged for resourcing review.","The EGL/BTP split (79%/21%) gave the finance team the workforce classification data needed for accurate cost centre reporting — previously calculated manually each quarter."],
+    tags:["Advanced Excel","XLOOKUP","Dynamic Dashboards","Conditional Formatting","Headcount Planning","FTE Analysis","HR Analytics"]
+  },
+  {
+    tag:"Tableau · 2024",
+    title:"IT Vendor Workforce Analysis Dashboard",
+    company:"Nike India Pvt. Ltd. · Enterprise / Retail",
+    headline:"Gave Nike India's vendor management team their first unified view across Wipro, Infosys, and Accenture — replacing weekly spreadsheet chaos with a live single source of truth.",
+    stats:[{l:"Vendors Tracked",v:"Wipro, Infosys, Accenture"},{l:"Dashboard Views",v:"3 dedicated panels"},{l:"Impact",v:"Reduced fill time"}],
+    overview:"Nike India's IT vendor management team was tracking contractor pipelines across three major vendors using disconnected spreadsheets updated manually before each weekly review meeting. There was no single view of open requisitions, fill rates, bill rate benchmarks, or SLA performance. I consolidated everything into a Tableau dashboard that became the standard tool for weekly vendor governance.",
+    approach:"Built a live requisition tracker showing open, filled, and cancelled status by vendor, role type, and time period. Created a vendor benchmark panel comparing average bill rates, time-to-fill, and SLA adherence across all three vendors. Added a contract completion trend line for forward workforce planning — enabling the team to anticipate resource gaps before they became urgent. Designed the layout to mirror weekly review meeting structure so the dashboard could be projected directly.",
+    findings:["Meaningful differences in time-to-fill and SLA adherence across vendors were completely invisible in the prior spreadsheet process — enabling performance-based vendor conversations for the first time.","Certain role categories had consistently higher fill times across all vendors, pointing to a sourcing pipeline problem rather than a vendor performance problem — a distinction that changed how the team addressed it.","The dashboard reduced the time spent preparing for weekly vendor reviews significantly, freeing the team to focus on decisions rather than data preparation."],
+    tags:["Tableau","Vendor Analysis","Workforce Planning","SLA Monitoring","Staffing Forecasting","KPI Dashboards","Cost Analysis"]
+  },
+  {
+    tag:"Advanced Excel · 2025",
+    title:"Freight Charges Analysis — Myntra Shipments",
+    company:"Nike India Pvt. Ltd. · Logistics & Supply Chain",
+    headline:"Surfaced billing discrepancies and overpriced route categories in Myntra shipment invoices — opening renegotiation conversations with Nike's logistics partner backed by data.",
+    stats:[{l:"Analysis Dimensions",v:"4"},{l:"Dataset",v:"Large multi-month"},{l:"Outcome",v:"Renegotiation initiated"}],
+    overview:"Nike India needed to validate freight invoices across Myntra shipments and identify where logistics costs were running disproportionately high. The raw shipment data was messy, unstandardised, and spread across multiple formats — making direct analysis impossible without significant preparation. I built a cost analysis model that cleaned the data and made it interrogatable across four dimensions simultaneously.",
+    approach:"Used Power Query to clean and standardise the full shipment dataset — resolving inconsistencies in route naming, weight band classifications, and shipment type labels across different invoice formats. Built a multi-dimensional cost model segmented by shipment type, route corridor, weight band, and time period. Created Pivot-based summary views for dynamic comparison of actuals against contracted rates. Added a variance analysis layer to automatically flag records where invoiced amounts exceeded contracted rates.",
+    findings:["Billing discrepancies between invoiced and contracted rates on specific route categories were formally documented and submitted as the basis for renegotiation with the logistics partner.","Two weight bands consistently showed cost-per-shipment significantly above category average, suggesting either incorrect weight classification during dispatch or a pricing anomaly in the contract terms.","Certain time periods showed freight cost spikes not explained by volume changes — pointing to undisclosed surcharges being applied outside the agreed rate card, which had gone undetected previously."],
+    tags:["Advanced Excel","Power Query","Cost Analysis","Variance Analysis","Data Cleaning","Logistics Analytics","Invoice Validation"]
   }
 ];
 
 /* ─── THEME TOGGLE ─── */
 const themeSwitch = document.getElementById('themeSwitch');
 const html = document.documentElement;
-
-// Load saved preference
 const saved = localStorage.getItem('theme');
-if (saved === 'dark') {
-  html.setAttribute('data-theme', 'dark');
-  themeSwitch.checked = true;
-}
-
+if (saved === 'dark') { html.setAttribute('data-theme', 'dark'); themeSwitch.checked = true; }
 themeSwitch.addEventListener('change', () => {
-  if (themeSwitch.checked) {
-    html.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    html.setAttribute('data-theme', 'light');
-    localStorage.setItem('theme', 'light');
-  }
+  if (themeSwitch.checked) { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+  else { html.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); }
 });
 
 /* ─── MODAL ─── */
@@ -964,13 +1228,12 @@ function openModal(i) {
   document.getElementById('mTag').textContent = p.tag;
   document.getElementById('mTitle').textContent = p.title;
   document.getElementById('mCo').textContent = p.company;
+  document.getElementById('mHeadline').textContent = '"' + p.headline + '"';
   document.getElementById('mStats').innerHTML = p.stats.map(s => `<div class="modal-stat"><div class="modal-stat-l">${s.l}</div><div class="modal-stat-v">${s.v}</div></div>`).join('');
   document.getElementById('mOv').textContent = p.overview;
   document.getElementById('mAp').textContent = p.approach;
-  document.getElementById('mIm').textContent = p.impact;
+  document.getElementById('mIm').innerHTML = p.findings.map(f => `<li class="modal-bullet">${f}</li>`).join('');
   document.getElementById('mTags').innerHTML = p.tags.map(t => `<span class="modal-tag-item">${t}</span>`).join('');
-  document.getElementById('mImgPh').textContent = p.title.split(' ').slice(0,2).join(' ').toUpperCase();
-  document.getElementById('mImgEl').style.display = 'none';
   document.getElementById('modalOv').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
